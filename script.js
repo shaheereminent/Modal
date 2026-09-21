@@ -48,5 +48,4 @@ DOM.body.addEventListener         ('keydown', function(e)
         closeModal();
 
     };
-};
-);
+});
