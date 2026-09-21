@@ -2,6 +2,7 @@
 
 const DOM = 
 {
+    body:          document,
     modal:         document.querySelector    ('.modal'),
     overlay:       document.querySelector    ('.overlay'),
     btnCloseModal: document.querySelector    ('.close-modal'),
@@ -37,3 +38,15 @@ for (let i=0; i<DOM.btnOpenModal.length; i++)
 // close modal event handler
 DOM.btnCloseModal.addEventListener('click', closeModal);
 DOM.overlay.addEventListener      ('click', closeModal);
+DOM.body.addEventListener         ('keydown', function(e)
+{
+
+    if (e.key === 'Escape' && !DOM.modal.classList.contains('hidden'))
+    {
+
+        console.log('Esc was pressed');
+        closeModal();
+
+    };
+};
+);
