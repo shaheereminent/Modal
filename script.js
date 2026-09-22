@@ -36,7 +36,9 @@ for (let i=0; i<DOM.btnOpenModal.length; i++)
 
 // close modal event handler
 DOM.btnCloseModal.addEventListener('click', closeModal);
+
 DOM.overlay.addEventListener      ('click', closeModal);
+
 DOM.body.addEventListener         ('keydown', function(e)
 {
 
