@@ -8,23 +8,48 @@
     <title>Modal window</title>
   </head>
   <body>
-    <button class="show-modal">Show modal 1</button>
-    <button class="show-modal">Show modal 2</button>
-    <button class="show-modal">Show modal 3</button>
+    <button class="show-modal" data-modal="1">Show modal 1</button>
+    <button class="show-modal" data-modal="2">Show modal 2</button>
+    <button class="show-modal" data-modal="3">Show modal 3</button>
 
-    <div class="modal hidden">
-      <button class="close-modal">&times;</button>
-      <h1>I'm a modal window 😍</h1>
+    <div class="modal hidden" data-modal="1">
+      <button class="close-modal" data-modal="1">&times;</button>
+      <h1>✨ Welcome to Premium</h1>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
+        Thank you for upgrading! Your account has been successfully updated to the Premium tier. You now have access to all our exclusive tools.
+      </p>
+      <p style="margin-top: 1.5rem; line-height: 1.8;">
+        <strong>Your new perks:</strong><br />
+        🚀 Unlimited project creation<br />
+        🔒 Advanced security features<br />
+        🎧 24/7 Priority support
       </p>
     </div>
+
+    <div class="modal hidden" data-modal="2">
+      <button class="close-modal" data-modal="2">&times;</button>
+      <h1>👤 User Profile</h1>
+      <p style="margin-bottom: 1.5rem; line-height: 1.8;">
+        <strong>Name:</strong> Jane Doe<br />
+        <strong>Role:</strong> Lead Product Designer<br />
+        <strong>Location:</strong> New York, USA
+      </p>
+      <p>
+        Jane is a passionate designer with over 10 years of experience creating beautiful, user-centric interfaces for modern web and mobile applications.
+      </p>
+    </div>
+
+    <div class="modal hidden" data-modal="3">
+      <button class="close-modal" data-modal="3">&times;</button>
+      <h1>🚨 Important Update</h1>
+      <p>
+        We have updated our Terms of Service and Privacy Policy to better protect your data and comply with recent global privacy regulations.
+      </p>
+      <p style="margin-top: 1.5rem;">
+        Please review the changes in your account settings. By continuing to use our platform, you agree to these updated terms.
+      </p>
+    </div>
+
     <div class="overlay hidden"></div>
 
     <script src="script.js"></script>

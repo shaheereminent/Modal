@@ -1,3 +1,7 @@
+/* =========================================================
+   RETRO ARCADE / COZY GAME UI
+   ========================================================= */
+
 * {
   margin: 0;
   padding: 0;
@@ -9,77 +13,382 @@ html {
   box-sizing: border-box;
 }
 
+:root {
+  --cream: #fff8df;
+  --paper: #fffdf2;
+  --ink: #34251f;
+  --muted: #75655b;
+  --red: #e84d4d;
+  --red-dark: #b9343b;
+  --yellow: #ffd45a;
+  --green: #69c46d;
+  --blue: #5db8e8;
+  --purple: #8f77d9;
+  --shadow: rgba(57, 33, 25, 0.28);
+}
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
 body {
-  font-family: sans-serif;
-  color: #333;
-  line-height: 1.5;
-  height: 100vh;
+  min-height: 100vh;
   position: relative;
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  background: linear-gradient(to top left, #28b487, #7dd56f);
+  flex-wrap: wrap;
+  gap: 1.4rem;
+
+  padding: 10rem 2rem 4rem;
+  overflow-x: hidden;
+
+  color: var(--ink);
+  font-family: "Trebuchet MS", "Arial Rounded MT Bold", Arial, sans-serif;
+  line-height: 1.5;
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.18),
+      rgba(255, 255, 255, 0)
+    ),
+    linear-gradient(to bottom, #62c9ef 0 53%, #7ed36e 53% 100%);
+
+  -webkit-font-smoothing: antialiased;
 }
 
-.show-modal {
-  font-size: 2rem;
-  font-weight: 600;
-  padding: 1.75rem 3.5rem;
-  margin: 5rem 2rem;
-  border: none;
-  background-color: #fff;
-  color: #444;
-  border-radius: 10rem;
-  cursor: pointer;
+/* Pixel-style clouds */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.8;
+  background: var(--cream);
+  border-radius: 2rem;
+  box-shadow:
+    3rem 0 0 var(--cream),
+    6rem 0 0 var(--cream),
+    2rem -1.7rem 0 var(--cream),
+    4.5rem -1.7rem 0 var(--cream);
 }
+
+body::before {
+  top: 8rem;
+  left: 8%;
+  width: 3.5rem;
+  height: 2rem;
+  animation: cloud-float 14s ease-in-out infinite alternate;
+}
+
+body::after {
+  top: 20rem;
+  right: 12%;
+  width: 3rem;
+  height: 1.8rem;
+  transform: scale(0.75);
+  animation: cloud-float 18s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes cloud-float {
+  from {
+    transform: translateX(-2rem);
+  }
+
+  to {
+    transform: translateX(4rem);
+  }
+}
+
+/* =========================================================
+   OPEN MODAL BUTTONS
+   ========================================================= */
+
+.show-modal {
+  position: relative;
+  z-index: 1;
+
+  min-width: 17rem;
+  padding: 1.5rem 2.2rem;
+
+  border: 0.3rem solid var(--ink);
+  border-radius: 1.2rem;
+
+  color: var(--ink);
+  background: var(--yellow);
+
+  font: inherit;
+  font-size: 1.7rem;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+
+  cursor: pointer;
+  box-shadow:
+    0 0.6rem 0 var(--ink),
+    0 1.5rem 2rem rgba(44, 39, 27, 0.18);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+}
+
+.show-modal:nth-of-type(2) {
+  background: var(--green);
+}
+
+.show-modal:nth-of-type(3) {
+  background: var(--blue);
+}
+
+.show-modal::before {
+  content: "★";
+  position: absolute;
+  top: -1.5rem;
+  right: 1.2rem;
+
+  color: #fff;
+  font-size: 2rem;
+  opacity: 0;
+  transform: scale(0) rotate(-20deg);
+  transition: 0.25s ease;
+}
+
+.show-modal:hover {
+  filter: saturate(1.15) brightness(1.04);
+  transform: translateY(-0.4rem);
+  box-shadow:
+    0 1rem 0 var(--ink),
+    0 2rem 2.5rem rgba(44, 39, 27, 0.22);
+}
+
+.show-modal:hover::before {
+  opacity: 1;
+  transform: scale(1) rotate(12deg);
+}
+
+.show-modal:active {
+  transform: translateY(0.3rem);
+  box-shadow:
+    0 0.25rem 0 var(--ink),
+    0 0.7rem 1rem rgba(44, 39, 27, 0.18);
+}
+
+.show-modal:focus-visible,
+.close-modal:focus-visible {
+  outline: 0.4rem solid #fff;
+  outline-offset: 0.3rem;
+}
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 10;
+
+  width: min(92%, 63rem);
+  max-height: 86vh;
+  overflow-y: auto;
+
+  padding: 5.5rem clamp(2.4rem, 6vw, 6rem) 4rem;
+
+  color: var(--ink);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.7), transparent 40%),
+    var(--paper);
+
+  border: 0.4rem solid var(--ink);
+  border-radius: 2rem;
+
+  box-shadow:
+    0 0 0 0.7rem rgba(255, 255, 255, 0.35),
+    1.2rem 1.4rem 0 var(--ink),
+    2.4rem 3rem 4rem var(--shadow);
+
+  transform: translate(-50%, -50%);
+  animation: modal-enter 0.45s cubic-bezier(0.2, 1.4, 0.4, 1);
+}
+
+/* Decorative pixel-like top border */
+.modal::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 2rem;
+  right: 2rem;
+  height: 0.8rem;
+
+  background: repeating-linear-gradient(
+    90deg,
+    var(--red) 0 1.8rem,
+    var(--yellow) 1.8rem 3.6rem,
+    var(--green) 3.6rem 5.4rem,
+    var(--blue) 5.4rem 7.2rem
+  );
+
+  border-radius: 0 0 0.6rem 0.6rem;
+}
+
+@keyframes modal-enter {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -44%) scale(0.72) rotate(-2deg);
+  }
+
+  70% {
+    transform: translate(-50%, -51%) scale(1.03) rotate(0.5deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(0);
+  }
+}
+
+.modal h1 {
+  margin-bottom: 1.8rem;
+  padding-right: 4rem;
+
+  color: var(--red-dark);
+  font-size: clamp(2.5rem, 5vw, 3.4rem);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+  text-shadow: 0.2rem 0.2rem 0 rgba(255, 212, 90, 0.65);
+}
+
+.modal p {
+  color: var(--muted);
+  font-size: 1.7rem;
+  line-height: 1.75;
+}
+
+.modal strong {
+  color: var(--ink);
+}
+
+/* =========================================================
+   CLOSE BUTTON
+   ========================================================= */
 
 .close-modal {
   position: absolute;
-  top: 1.2rem;
-  right: 2rem;
-  font-size: 5rem;
-  color: #333;
+  top: 1.5rem;
+  right: 1.5rem;
+
+  display: grid;
+  place-items: center;
+
+  width: 4.4rem;
+  height: 4.4rem;
+
+  border: 0.3rem solid var(--ink);
+  border-radius: 50%;
+
+  color: #fff;
+  background: var(--red);
+
+  font-family: Arial, sans-serif;
+  font-size: 3rem;
+  font-weight: bold;
+  line-height: 1;
+
   cursor: pointer;
-  border: none;
-  background: none;
+  box-shadow: 0 0.4rem 0 var(--red-dark);
+
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
-h1 {
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
+.close-modal:hover {
+  background: #f26363;
+  transform: rotate(90deg) scale(1.08);
 }
 
-p {
-  font-size: 1.8rem;
+.close-modal:active {
+  transform: rotate(90deg) scale(0.94) translateY(0.2rem);
+  box-shadow: 0 0.15rem 0 var(--red-dark);
 }
 
-/* -------------------------- */
-/* CLASSES TO MAKE MODAL WORK */
+/* =========================================================
+   OVERLAY
+   ========================================================= */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+
+  background: rgba(31, 26, 47, 0.66);
+  backdrop-filter: blur(0.8rem) saturate(0.8);
+
+  animation: overlay-enter 0.3s ease-out;
+}
+
+@keyframes overlay-enter {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Required by your existing JavaScript */
 .hidden {
   display: none;
 }
 
-.modal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 70%;
+/* =========================================================
+   RESPONSIVE DESIGN
+   ========================================================= */
 
-  background-color: white;
-  padding: 6rem;
-  border-radius: 5px;
-  box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
-  z-index: 10;
+@media (max-width: 650px) {
+  body {
+    align-content: flex-start;
+    padding: 6rem 1.5rem 3rem;
+  }
+
+  .show-modal {
+    width: 100%;
+    max-width: 32rem;
+    margin: 0;
+  }
+
+  .modal {
+    padding: 5rem 2.2rem 3rem;
+    border-width: 0.3rem;
+    box-shadow:
+      0 0 0 0.5rem rgba(255, 255, 255, 0.35),
+      0.7rem 0.9rem 0 var(--ink),
+      1.4rem 2rem 3rem var(--shadow);
+  }
+
+  .modal p {
+    font-size: 1.6rem;
+  }
+
+  .close-modal {
+    top: 1.2rem;
+    right: 1.2rem;
+  }
 }
 
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(3px);
-  z-index: 5;
+/* Reduce motion for users who request it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
